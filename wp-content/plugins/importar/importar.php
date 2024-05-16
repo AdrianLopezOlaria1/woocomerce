@@ -21,7 +21,7 @@ function importarProductos() {
             
             if ( is_numeric($data[0])) {            
                 
-                $product_data = array(
+               /*$product_data = array(
                     'id' => isset($data[0]) ? $data[0] : '',
                     'type' => isset($data[1]) ? $data[1] : '',
                     'sku' => isset($data[2]) ? $data[2] : '',
@@ -61,7 +61,15 @@ function importarProductos() {
                     'product_url' => isset($data[36]) ? $data[36] : '',
                     'button_text' => isset($data[37]) ? $data[37] : '',
                     'menu_order' => isset($data[38]) ? $data[38] : '',
-                );                                        
+                );   */
+
+                $product_data = array(
+                    'post_title'    => isset($data[3]) ? $data[3] : '',
+                    'post_content'  => isset($data[7]) ? $data[7] : '',
+                    'post_status'   => 'publish', // Estado del producto (publish para publicado)
+                    'post_type'     => 'product',
+                );   
+                //echo '<pre>';                                     
                 //var_dump($product_data); die();
                 $product_id = wp_insert_post( $product_data );                                                                                      
                 //var_dump($product_id);
@@ -72,6 +80,76 @@ function importarProductos() {
         }
         fclose( $handle );
     }
+}
+
+
+
+// Asegúrate de que este código se ejecute dentro del entorno de WordPress
+
+// Hook para registrar el Custom Post Type y la taxonomía
+add_action('init', 'registrar_bebidas_y_tipos_de_bebida', 0);
+
+function registrar_bebidas_y_tipos_de_bebida() {
+    // Registrar el Custom Post Type "Bebidas"
+    $labels = array(
+        'name'               => _x('Bebidas', 'post type general name', 'textdomain'),
+        'singular_name'      => _x('Bebida', 'post type singular name', 'textdomain'),
+        'menu_name'          => _x('Bebidas', 'admin menu', 'textdomain'),
+        'name_admin_bar'     => _x('Bebida', 'add new on admin bar', 'textdomain'),
+        'add_new'            => _x('Añadir Nueva', 'bebida', 'textdomain'),
+        'add_new_item'       => __('Añadir Nueva Bebida', 'textdomain'),
+        'new_item'           => __('Nueva Bebida', 'textdomain'),
+        'edit_item'          => __('Editar Bebida', 'textdomain'),
+        'view_item'          => __('Ver Bebida', 'textdomain'),
+        'all_items'          => __('Todas las Bebidas', 'textdomain'),
+        'search_items'       => __('Buscar Bebidas', 'textdomain'),
+        'parent_item_colon'  => __('Bebida Padre:', 'textdomain'),
+        'not_found'          => __('No se encontraron bebidas.', 'textdomain'),
+        'not_found_in_trash' => __('No se encontraron bebidas en la papelera.', 'textdomain')
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'bebidas'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments')
+    );
+
+    register_post_type('bebidas', $args);
+
+    // Registrar la taxonomía personalizada "Tipos de Bebida"
+    $labels = array(
+        'name'              => _x('Tipos de Bebida', 'taxonomy general name', 'textdomain'),
+        'singular_name'     => _x('Tipo de Bebida', 'taxonomy singular name', 'textdomain'),
+        'search_items'      => __('Buscar Tipos de Bebida', 'textdomain'),
+        'all_items'         => __('Todos los Tipos de Bebida', 'textdomain'),
+        'parent_item'       => __('Tipo de Bebida Padre', 'textdomain'),
+        'parent_item_colon' => __('Tipo de Bebida Padre:', 'textdomain'),
+        'edit_item'         => __('Editar Tipo de Bebida', 'textdomain'),
+        'update_item'       => __('Actualizar Tipo de Bebida', 'textdomain'),
+        'add_new_item'      => __('Añadir Nuevo Tipo de Bebida', 'textdomain'),
+        'new_item_name'     => __('Nuevo Nombre de Tipo de Bebida', 'textdomain'),
+        'menu_name'         => __('Tipos de Bebida', 'textdomain')
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'tipo-de-bebida')
+    );
+
+    register_taxonomy('tipo_de_bebida', array('bebidas'), $args);
 }
 
 function activar(){};
