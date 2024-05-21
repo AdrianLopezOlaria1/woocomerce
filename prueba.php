@@ -1,15 +1,4 @@
-<?php
-
-require_once("./wp-load.php");
-
-// Verificar si se ha hecho clic en el botón de generar PDF
-if (isset($_POST['generate_pdf'])) {
-    echo"<p>recibido</p>";
-}
-
-?>
-
-
+<?php require_once("./wp-load.php");?>
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -49,8 +38,8 @@ if (isset($_POST['generate_pdf'])) {
                                 ?>
                                 <tr>
                                     <td><?php the_title(); ?></td>
-                                    <td class="description"><?php echo $product->get_description(); ?></td>
-                                    <td><?php echo wc_price($product->get_price_html()); ?></td>
+                                    <td class="description"><?php echo $product->get_short_description(); ?></td>
+                                    <td><?php echo $product->get_price_html(); ?></td>
                                     <td><?php echo $product->is_in_stock() ? 'Sí' : 'No'; ?></td>
                                     <td><?php echo get_the_time('F j, Y'); ?></td>
                                 </tr>
@@ -68,10 +57,11 @@ if (isset($_POST['generate_pdf'])) {
             </form>
             
         </div>
-        <button type="submit" id="generate_pdf" name="generate_pdf">Generar PDF</button>
+        <!-- <button type="submit" id="generate_pdf" name="generate_pdf">Generar PDF</button> -->
+        <a href="pdf_gen.php">Generar PDF</a>
     </div><!-- div contenido end -->
     
-        <script>
+        <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             let generate_pdf = document.getElementById("generate_pdf");
             let formulario = document.getElementById("tabla")
@@ -81,5 +71,5 @@ if (isset($_POST['generate_pdf'])) {
                 formulario.submit();
             }
         });
-        </script>
+        </script> -->
 </body>
