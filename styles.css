@@ -1,0 +1,53 @@
+/* Estilos para la tabla de productos */
+body {
+    margin: 50px;
+    margin-top: 3%;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 2px solid #4e4e4e; /* Borde exterior de la tabla */
+}
+
+.product-table th,
+.product-table td {
+    border-bottom: 2px solid #4e4e4e; /* Borde inferior de las celdas */
+    border-top: 2px solid #4e4e4e; /* Borde superior de las celdas */
+    border-left: 2px solid #4e4e4e; /* Borde izquierdo de las celdas */
+    border-right: 2px solid #4e4e4e; /* Borde derecho de las celdas */
+    padding: 8px;
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para filas pares */
+.product-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para filas impares */
+.product-table tbody tr:nth-child(odd) {
+    background-color: #ececec; /* Cambia este color al que desees */
+}
+
+/* Ajuste de tamaño para el campo de descripción */
+.product-table .description {
+    max-height: 100px; /* Ajusta la altura máxima según prefieras */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Para truncar el texto si supera la altura máxima */
+}
+
+h1 {
+    text-align: center;
+}
+
+#contenido {
+    background-color: rgb(214, 214, 214);
+    padding: 5%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
